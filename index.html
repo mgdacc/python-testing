@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentación Interactiva: Testing en Python</title>
+    <style>
+        /* === ESTILOS GLOBALES Y DE ESCRITORIO === */
+        body {
+            font-family: Arial, sans-serif; background-color: #f0f0f0; margin: 0;
+            padding: 40px; display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; box-sizing: border-box; transition: padding 0.3s ease;
+        }
+
+        .slideshow-container { position: relative; width: 90%; max-width: 960px; }
+        
+        .slide {
+            display: none; background-color: #fff; border: 1px solid #ccc;
+            height: 540px; padding: 40px 60px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            flex-direction: column; justify-content: center; position: relative;
+            box-sizing: border-box;
+        }
+
+        .fade { animation-name: fade; animation-duration: 0.5s; }
+        @keyframes fade { from {opacity: .4} to {opacity: 1} }
+
+        .prev, .next {
+            cursor: pointer; position: absolute; top: 50%; transform: translateY(-50%);
+            width: 50px; height: 50px; background-color: #cccccc; color: #333;
+            border-radius: 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            display: flex; justify-content: center; align-items: center;
+            font-weight: bold; font-size: 24px; transition: all 0.3s ease;
+            user-select: none; z-index: 10;
+        }
+
+        .prev { left: -70px; }
+        .next { right: -70px; }
+        .prev:hover, .next:hover { background-color: #aaaaaa; }
+
+        .slide h1 { font-size: 3.5em; text-align: center; border-bottom: 4px solid #11a800; padding-bottom: 20px; color: #005A9C; }
+        .slide h2 { font-size: 2.8em; margin-top: 0; margin-bottom: 30px; text-align: center; color: #005A9C; }
+        .single-content { text-align: center; }
+        .single-content p { font-size: 1.5em; color: #444; }
+        .single-content pre { font-size: 1.2em; display: inline-block; text-align: left; max-width: 100%; }
+        pre { background-color: #2d3636; color: #fff; padding: 15px; border-radius: 5px; font-size: 1.1em; white-space: pre-wrap; }
+        .footer { position: absolute; bottom: 20px; right: 40px; font-size: 1em; color: #888; }
+
+        /* === MEDIA QUERIES === */
+        @media screen and (max-width: 768px) {
+            body { padding: 15px; }
+            .slideshow-container { width: 100%; padding-bottom: 75px; }
+            .slide { height: auto; min-height: 75vh; padding: 20px 25px; }
+            .prev, .next { top: auto; bottom: 15px; width: 45px; height: 45px; }
+            .prev { left: 50%; transform: translateX(-110%); }
+            .next { left: 50%; transform: translateX(10%); right: auto; }
+            .slide h1 { font-size: 2.2em; }
+            .slide h2 { font-size: 1.8em; }
+            .single-content p { font-size: 1.1em; }
+            .single-content pre { font-size: 1em; }
+            .footer { font-size: 0.8em; right: 25px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="slideshow-container">
+        
+        <div class="slide fade">
+            <h1>Cheat Sheet de Python</h1>
+            <h2 style="color:#333; border:none;">Testing</h2>
+            <div class="footer">1 / 20</div>
+        </div>
+
+        <div class="slide fade">
+            <h2>¿Por qué Escribir Tests?</h2>
+            <div class="single-content"><p>1. <strong>Confianza:</strong> Garantiza que tu código hace lo que esperas.<br>2. <strong>Seguridad:</strong> Permite refactorizar y añadir nuevas características sin romper lo que ya funcionaba (evita regresiones).<br>3. <strong>Documentación:</strong> Los tests son ejemplos vivos de cómo debe usarse tu código.</p></div>
+            <div class="footer">2 / 20</div>
+        </div>
+        
+        <div class="slide fade">
+            <h2>Tipos de Tests (Conceptos)</h2>
+            <div class="single-content"><p><strong>Unit Test (Prueba Unitaria):</strong> Prueba una pequeña pieza de código (una función, un método) de forma aislada.<br><br><strong>Integration Test (Prueba de Integración):</strong> Prueba cómo interactúan varias piezas de código juntas.<br><br><strong>End-to-End Test (Prueba de Extremo a Extremo):</strong> Prueba el flujo completo de la aplicación, como lo haría un usuario.</p></div>
+            <div class="footer">3 / 20</div>
+        </div>
+
+        <div class="slide fade">
+            <h2>El Clásico: <code>unittest</code></h2>
+            <div class="single-content"><p>El framework de testing integrado en la librería estándar de Python. Está basado en clases y es muy completo.</p></div>
+            <div class="footer">4 / 20</div>
+        </div>
+
+        <div class="slide fade">
+            <h2>Estructura de <code>unittest</code></h2>
+            <div class="single-content"><p>Se crea una clase que hereda de `unittest.TestCase` y los métodos de prueba deben empezar con `test_`.</p><pre><code>import unittest
+
+class MiTest(unittest.TestCase):
+    def test_algo(self):
+        # ... aquí va el código de la prueba ...
+        pass</code></pre></div>
+            <div class="footer">5 / 20</div>
+        </div>
+        
+        <div class="slide fade">
+            <h2>Aserciones en <code>unittest</code></h2>
+            <div class="single-content"><p>Se usan métodos especiales como `self.assertEqual()` para verificar que el resultado es el esperado.</p><pre><code>def test_suma(self):
+    resultado = 2 + 2
+    self.assertEqual(resultado, 4)
+    self.assertTrue(resultado > 0)</code></pre></div>
+            <div class="footer">6 / 20</div>
+        </div>
+        
+        <div class="slide fade">
+            <h2>Ejecutar <code>unittest</code></h2>
+            <div class="single-content"><p>Se ejecuta desde la terminal. El comando buscará y ejecutará todos los tests.</p><pre><code>python -m unittest discover</code></pre></div>
+            <div class="footer">7 / 20</div>
+        </div>
+        
+        <div class="slide fade">
+            <h2>El Moderno: <code>pytest</code></h2>
+            <div class="single-content"><p>El framework de testing estándar de facto en la comunidad. Es más simple, más legible y mucho más potente que `unittest`.</p></div>
+            <div class="footer">8 / 20</div>
+        </div>
+
+        <div class="slide fade">
+            <h2>¿Por qué <code>pytest</code> es Mejor?</h2>
+            <div class="single-content"><p>1. <strong>Menos código:</strong> No requiere clases.<br>2. <strong>Aserciones simples:</strong> Usa la palabra clave `assert` normal de Python.<br>3. <strong>Fixtures:</strong> Un sistema increíble para gestionar el estado de los tests.<br>4. <strong>Ecosistema enorme:</strong> Cientos de plugins para todo tipo de testing.</p></div>
+            <div class="footer">9 / 20</div>
+        </div>
+        
+        <div class="slide fade">
+            <h2>Ejemplo con <code>pytest</code></h2>
+            <div class="single-content"><p>Los tests son simplemente funciones que empiezan con `test_` en archivos que empiezan con `test_`.</p><pre><code># En calculadora/operaciones.py
+def sumar(a, b):
+    return a + b
+
+# En tests/test_operaciones.py
+from calculadora import operaciones
+
+def test_sumar():
+    assert operaciones.sumar(2, 3) == 5
+    assert operaciones.sumar(-1, 1) == 0</code></pre></div>
+            <div class="footer">10 / 20</div>
+        </div>
+        
+        <div class="slide fade">
+            <h2>Ejecutar <code>pytest</code></h2>
+            <div class="single-content"><p>Se instala con `pip` y se ejecuta desde la terminal. Automáticamente descubre y corre los tests.</p><pre><code>pip install pytest
+
+pytest</code></pre></div>
+            <div class="footer">11 / 20</div>
+        </div>
+
+        <div class="slide fade">
+            <h2>Fixtures en <code>pytest</code></h2>
+            <div class="single-content"><p>Una fixture es una función que prepara datos o recursos para un test. Se usa para evitar repetir código de configuración.</p><pre><code>import pytest
+
+@pytest.fixture
+def lista_de_numeros():
+    """Devuelve una lista simple para usar en los tests."""
+    return [1, 2, 3, 4, 5]
+
+def test_suma(lista_de_numeros):
+    assert sum(lista_de_numeros) == 15</code></pre></div>
+            <div class="footer">12 / 20</div>
+        </div>
+        
+        <div class="slide fade">
+            <h2>Parametrización</h2>
+            <div class="single-content"><p>Permite ejecutar el mismo test con múltiples combinaciones de datos, sin repetir código.</p><pre><code>@pytest.mark.parametrize("a, b, esperado", [
+    (1, 2, 3),
+    (-1, 1, 0),
+    (10, -5, 5)
+])
+def test_sumar_parametrizado(a, b, esperado):
+    assert sumar(a, b) == esperado</code></pre></div>
+            <div class="footer">13 / 20</div>
+        </div>
+
+        <div class="slide fade">
+            <h2>TDD: Test-Driven Development</h2>
+            <div class="single-content"><p>Una metodología de desarrollo que sigue 3 pasos:</p><p>1. <strong>Rojo:</strong> Escribe un test que falla porque la funcionalidad aún no existe.<br>2. <strong>Verde:</strong> Escribe el código más simple posible para que el test pase.<br>3. <strong>Refactor:</strong> Limpia y mejora el código, asegurándote de que el test siga pasando.</p></div>
+            <div class="footer">14 / 20</div>
+        </div>
+
+        <div class="slide fade">
+            <h2>Code Coverage</h2>
+            <div class="single-content"><p>Mide qué porcentaje de tu código es ejecutado por tus tests. Ayuda a encontrar partes de tu aplicación que no están siendo probadas.</p><pre><code>pip install pytest-cov
+
+# Ejecutar tests y generar reporte de cobertura
+pytest --cov=mi_proyecto</code></pre></div>
+            <div class="footer">15 / 20</div>
+        </div>
+        
+        <div class="slide fade">
+            <h2>Mocking (Simulación)</h2>
+            <div class="single-content"><p>La técnica de reemplazar partes de tu sistema (como una API externa o una base de datos) con objetos falsos para poder probar tu código de forma aislada.</p></div>
+            <div class="footer">16 / 20</div>
+        </div>
+        
+        <div class="slide fade">
+            <h2>Ejemplo de Mocking</h2>
+            <div class="single-content"><p>Usamos `unittest.mock` para simular una petición a una API y evitar que el test dependa de una conexión a internet.</p><pre><code>from unittest.mock import patch
+
+@patch('requests.get')
+def test_mi_funcion(mock_get):
+    # Configuramos el mock para que devuelva un resultado falso
+    mock_get.return_value.json.return_value = {"nombre": "Ana"}
+    
+    # ... ahora llamamos a nuestra función que usa requests.get ...
+    resultado = mi_funcion_que_usa_api()
+    assert resultado == "Ana"</code></pre></div>
+            <div class="footer">17 / 20</div>
+        </div>
+
+        <div class="slide fade">
+            <h2>Estructura de un Proyecto</h2>
+            <div class="single-content"><p>Normalmente, los tests viven en una carpeta separada llamada `tests/` en la raíz de tu proyecto.</p><pre><code>/mi_proyecto
+|-- venv/
+|-- /mi_proyecto
+|   |-- __init__.py
+|   |-- mi_codigo.py
+|-- /tests
+    |-- test_mi_codigo.py</code></pre></div>
+            <div class="footer">18 / 20</div>
+        </div>
+        
+        <div class="slide fade">
+            <h2>Regla de Oro</h2>
+            <div class="single-content"><p>Un test que no se ejecuta automáticamente de forma regular es un test que no sirve de nada. Integra el testing en tu flujo de trabajo diario.</p></div>
+            <div class="footer">19 / 20</div>
+        </div>
+        
+        <div class="slide fade">
+            <h2>Conclusión</h2>
+            <div class="single-content"><p>Escribir tests es una inversión que paga dividendos en estabilidad, mantenibilidad y paz mental. <code>pytest</code> es la herramienta moderna y recomendada para hacer de esta práctica algo simple y poderoso.</p></div>
+            <div class="footer">20 / 20</div>
+        </div>
+
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    </div>
+
+    <script>
+        let slideIndex = 1;
+        showSlides(slideIndex);
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("slide");
+            if (n > slides.length) { slideIndex = 1 } 
+            if (n < 1) { slideIndex = slides.length }
+            
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            
+            slides[slideIndex - 1].style.display = "flex";
+        }
+    </script>
+
+</body>
+</html>
